@@ -1,5 +1,9 @@
 package main
 
-func main() {
+import (
+	"gonotify/internal/server"
+)
 
+func main() {
+	server.StartServer()
 }
