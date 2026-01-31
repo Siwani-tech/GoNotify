@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"gonotify/internal/models"
+	"gonotify/internal/queue"
 )
 
 func NotifyHandler(w http.ResponseWriter, r *http.Request) {
@@ -22,7 +23,7 @@ func NotifyHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Invalid request body"))
 		return
 	}
-
+	queue.NotificationQueue <- notification
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte("Notification received"))
 

@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"gonotify/internal/handlers"
+	"gonotify/internal/queue"
+	"gonotify/internal/worker"
 )
 
 func StartServer() {
@@ -15,5 +17,8 @@ func StartServer() {
 	})
 
 	http.HandleFunc("/notify", handlers.NotifyHandler)
+	for i := 1; i <= 3; i++ {
+		go worker.StartWorker(i, queue.NotificationQueue)
+	}
 	http.ListenAndServe(":8080", nil)
 }
