@@ -1,24 +1,23 @@
 package server
 
 import (
-	"fmt"
 	"net/http"
 
 	"gonotify/internal/handlers"
-	"gonotify/internal/queue"
-	"gonotify/internal/worker"
 )
 
-func StartServer() {
-	fmt.Println("Server started on port 8080")
+func StartServer() *http.Server {
 
-	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
+	mux := http.NewServeMux()
+
+	mux.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("GoNotify is running"))
 	})
 
-	http.HandleFunc("/notify", handlers.NotifyHandler)
-	for i := 1; i <= 3; i++ {
-		go worker.StartWorker(i, queue.NotificationQueue)
+	mux.HandleFunc("/notify", handlers.NotifyHandler)
+
+	return &http.Server{
+		Addr:    ":8080",
+		Handler: mux,
 	}
-	http.ListenAndServe(":8080", nil)
 }
