@@ -14,17 +14,28 @@ func NotifyHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusMethodNotAllowed)
 		return
 	}
-
-	var notification models.Notification
-
-	err := json.NewDecoder(r.Body).Decode(&notification)
+	var notifications []models.Notification
+	err := json.NewDecoder(r.Body).Decode(&notifications)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte("Invalid request body"))
 		return
 	}
-	queue.NotificationQueue <- notification
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte("Notification received"))
 
+	failed := 0
+	for _, notification := range notifications {
+		select {
+		case queue.NotificationQueue <- notification:
+		default:
+			failed++
+		}
+	}
+
+	if failed > 0 {
+		w.WriteHeader(http.StatusPartialContent)
+		w.Write([]byte("Some notifications could not be queued"))
+		return
+	}
+
+	w.WriteHeader(http.StatusAccepted)
+	w.Write([]byte("All notifications queued"))
 }
