@@ -60,21 +60,21 @@ internal/
 
 ##  Running the Project
 
-### 1️1 Clone the repo
+### 1 Clone the repo
 
 ```bash
 git clone https://github.com/Siwani-tech/gonotify.git
 cd gonotify
 ```
 
-### 2️2 Set env variables (optional)
+### 2 Set env variables (optional)
 
 ```bash
 export NUM_WORKERS=3
 export QUEUE_SIZE=100
 ```
 
-### 3️3 Run the server
+### 3 Run the server
 
 ```bash
 go run main.go
