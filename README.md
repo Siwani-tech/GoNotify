@@ -63,7 +63,7 @@ internal/
 ### 1 Clone the repo
 
 ```bash
-git clone https://github.com/Siwani-tech/gonotify.git
+git clone [https://github.com/Siwani-tech/gonotify.git](https://github.com/Siwani-tech/GoNotify.git)
 cd gonotify
 ```
 
