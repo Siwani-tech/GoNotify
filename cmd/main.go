@@ -15,6 +15,7 @@ import (
 )
 
 func main() {
+	go worker.StartDLQWorker(queue.DeadLetterQueue)
 
 	var wg sync.WaitGroup
 
