@@ -67,14 +67,7 @@ git clone [https://github.com/Siwani-tech/gonotify.git](https://github.com/Siwan
 cd gonotify
 ```
 
-### 2 Set env variables (optional)
-
-```bash
-export NUM_WORKERS=3
-export QUEUE_SIZE=100
-```
-
-### 3 Run the server
+### 2 Run the server
 
 ```bash
 go run main.go
